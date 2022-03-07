@@ -1,10 +1,11 @@
 import Question from "./Question";
 import Button from "./Button";
+import data from "./data";
 
 function App() {
   return (
     <div className="App">
-      <Question />
+      <Question content={data} />
       <Button />
 
       {/* 

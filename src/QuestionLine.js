@@ -1,3 +1,3 @@
 export default function QuestionLine(props) {
-  return <h2>Question Line</h2>;
+  return <h3>{props.question}</h3>;
 }
