@@ -1,19 +1,16 @@
-import QuestionLine from "./QuestionLine";
-import AnswersLine from "./AnswersLine";
-import { nanoid } from "nanoid";
+import Answer from "./Answer";
 
 export default function Question(props) {
-  const questionsList = props.content.map((question, index) => {
-    return (
-      <div className="question" key={index}>
-        <QuestionLine key={nanoid()} question={question.question} />
-        <AnswersLine
-          key={nanoid()}
-          correct={question.correct_answer}
-          incorrect={question.incorrect_answers}
-        />
-      </div>
-    );
+  const allAnswersArr = [props.correctAnswer, ...props.incorrectAnswers];
+  const shuffleAnswers = allAnswersArr.sort(() => Math.random() - 0.5);
+  const answersDisplay = shuffleAnswers.map((answer, index) => {
+    return <Answer key={index + 1} content={answer} />;
   });
-  return <div className="questions-container">{questionsList}</div>;
+
+  return (
+    <div className="questions-container">
+      <h3>{props.title}</h3>
+      {answersDisplay}
+    </div>
+  );
 }
