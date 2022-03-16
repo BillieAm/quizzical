@@ -5,21 +5,43 @@ import data from "./data";
 
 function App() {
   const [gameStart, setGameStart] = useState(false);
-  const [newQuestions, setNewQuestions] = useState();
-  const [selectedAnswers, setSelectedAnswers] = useState([]);
+  const [questions, setQuestions] = useState(setQuestionsIds(data));
+
+  console.log(questions);
 
   // Happens only once at the beginnign
   const startGame = () => {
     setGameStart(true);
   };
 
-  const questionsDisplay = data.map((question, index) => {
+  function setQuestionsIds(questionsArr) {
+    return questionsArr.map((question, index) => {
+      return { ...question, id: index + 1 };
+    });
+  }
+
+  function addPlyerAnswer(questionId, answer) {
+    setQuestions((prevQuestions) => {
+      return questions.map((question) => {
+        return question.id === questionId
+          ? { ...question, playerAnswer: answer }
+          : question;
+      });
+    });
+  }
+
+  const questionsDisplay = questions.map((question) => {
     return (
       <Question
-        key={index + 1}
+        key={question.id}
+        id={question.id}
         title={question.question}
         correctAnswer={question.correct_answer}
         incorrectAnswers={question.incorrect_answers}
+        playerAnswer={question.playerAnswer}
+        handlePlayerAnswer={(e) =>
+          addPlyerAnswer(question.id, e.target.innerText)
+        }
       />
     );
   });
