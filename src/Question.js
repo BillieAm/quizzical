@@ -3,9 +3,10 @@ export default function Question(props) {
     return (
       <p
         key={index + 1}
+        index={index}
         onClick={props.handlePlayerAnswer}
         style={{
-          backgroundColor: props.playerAnswer === answer ? "red" : "white",
+          backgroundColor: props.playerAnswer === answer ? "grey" : "white",
         }}
       >
         {answer}
@@ -16,7 +17,7 @@ export default function Question(props) {
   return (
     <div className="questions-container">
       <h3>{props.title}</h3>
-      {answersDisplay}
+      <div className="answers-container">{answersDisplay}</div>
     </div>
   );
 }

@@ -1,35 +1,35 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { decode } from "html-entities";
 import Question from "./Question";
-import Button from "./Button";
-import data from "./data";
 
-const shuffleAnswers = data.map((item) => {
-  return {
-    ...item,
-    shuffledAnswers: [...item.incorrect_answers, item.correct_answer].sort(
-      () => Math.random() - 0.5
-    ),
-  };
-});
-
-function App() {
+export default function App() {
   const [gameStart, setGameStart] = useState(false);
-  const [questions, setQuestions] = useState(
-    setQuestionsFromData(shuffleAnswers)
-  );
+  const [questions, setQuestions] = useState([]);
 
-  console.log(questions);
+  useEffect(() => {
+    (async function getQuestions() {
+      const res = await fetch("https://opentdb.com/api.php?amount=5");
+      const data = await res.json();
+      console.log(data.results);
+
+      const DataWithShuffledAnswers = data.results.map((item, index) => {
+        return {
+          ...item,
+          id: index + 1,
+          shuffledAnswers: [
+            ...item.incorrect_answers,
+            item.correct_answer,
+          ].sort(() => Math.random() - 0.5),
+        };
+      });
+      setQuestions(DataWithShuffledAnswers);
+    })();
+  }, []);
 
   // Happens only once at the beginnig
   const startGame = () => {
     setGameStart(true);
   };
-
-  function setQuestionsFromData(questionsArr) {
-    return questionsArr.map((question, index) => {
-      return { ...question, id: index + 1 };
-    });
-  }
 
   function addPlyerAnswer(questionId, answer) {
     setQuestions((prevQuestions) => {
@@ -41,13 +41,21 @@ function App() {
     });
   }
 
+  // function checkAnswers() {
+  //   const isAllAnswered = questions.every((question) => question.playerAnswer);
+  //   // !isAllAnswered ?
+  //   //   alert("All questions must be answered")
+  //   //   :
+  //   // questions.map(question => )
+  // }
+
   const questionsDisplay = questions.map((question) => {
     return (
       <Question
         key={question.id}
         id={question.id}
-        title={question.question}
-        answers={question.shuffledAnswers}
+        title={decode(question.question)}
+        answers={decode(question.shuffledAnswers)}
         playerAnswer={question.playerAnswer}
         handlePlayerAnswer={(e) =>
           addPlyerAnswer(question.id, e.target.innerText)
@@ -61,7 +69,7 @@ function App() {
       {gameStart ? (
         <div className="quizzical">
           {questionsDisplay}
-          <Button />
+          <button>Check Answers</button>
         </div>
       ) : (
         <div className="not-started">
@@ -73,5 +81,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
