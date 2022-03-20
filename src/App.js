@@ -3,6 +3,7 @@ import { decode } from "html-entities";
 import Question from "./Question";
 
 export default function App() {
+  const [gameStart, setGameStart] = useState(false);
   const [gameRound, setGameRound] = useState(0);
   const [questions, setQuestions] = useState([]);
 
@@ -12,22 +13,31 @@ export default function App() {
       const data = await res.json();
       console.log(data.results);
 
-      const DataWithShuffledAnswers = data.results.map((item, index) => {
+      const questionsData = data.results.map((item, index) => {
+        const correctAnswer = decode(item.correct_answer);
+        const incorrectAnswers = item.incorrect_answers.map((answer) =>
+          decode(answer)
+        );
+
         return {
-          ...item,
           id: index + 1,
-          shuffledAnswers: [
-            ...item.incorrect_answers,
-            item.correct_answer,
-          ].sort(() => Math.random() - 0.5),
+          question: decode(item.question),
+          correct_answer: correctAnswer,
+          incorrect_answers: incorrectAnswers,
+          shuffledAnswers: [...incorrectAnswers, correctAnswer].sort(
+            () => Math.random() - 0.5
+          ),
         };
       });
-      setQuestions(DataWithShuffledAnswers);
+      setQuestions(questionsData);
     })();
-  }, []);
+  }, [gameRound]);
 
-  // Happens only once at the beginnig
   const startGame = () => {
+    setGameStart(true);
+  };
+
+  const roundsCounter = () => {
     setGameRound((prevCount) => prevCount + 1);
   };
 
@@ -46,8 +56,8 @@ export default function App() {
       <Question
         key={question.id}
         id={question.id}
-        title={decode(question.question)}
-        answers={decode(question.shuffledAnswers)}
+        title={question.question}
+        answers={question.shuffledAnswers}
         playerAnswer={question.playerAnswer}
         handlePlayerAnswer={(e) =>
           addPlyerAnswer(question.id, e.target.innerText)
@@ -58,7 +68,7 @@ export default function App() {
 
   return (
     <div className="App">
-      {gameRound ? (
+      {gameStart ? (
         <div className="quizzical">
           {questionsDisplay}
           <button>Check Answers</button>
