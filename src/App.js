@@ -3,7 +3,7 @@ import { decode } from "html-entities";
 import Question from "./Question";
 
 export default function App() {
-  const [gameStart, setGameStart] = useState(false);
+  const [gameRound, setGameRound] = useState(0);
   const [questions, setQuestions] = useState([]);
 
   useEffect(() => {
@@ -28,7 +28,7 @@ export default function App() {
 
   // Happens only once at the beginnig
   const startGame = () => {
-    setGameStart(true);
+    setGameRound((prevCount) => prevCount + 1);
   };
 
   function addPlyerAnswer(questionId, answer) {
@@ -40,14 +40,6 @@ export default function App() {
       });
     });
   }
-
-  // function checkAnswers() {
-  //   const isAllAnswered = questions.every((question) => question.playerAnswer);
-  //   // !isAllAnswered ?
-  //   //   alert("All questions must be answered")
-  //   //   :
-  //   // questions.map(question => )
-  // }
 
   const questionsDisplay = questions.map((question) => {
     return (
@@ -66,7 +58,7 @@ export default function App() {
 
   return (
     <div className="App">
-      {gameStart ? (
+      {gameRound ? (
         <div className="quizzical">
           {questionsDisplay}
           <button>Check Answers</button>
