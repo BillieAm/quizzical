@@ -15,7 +15,7 @@ export default function Question(props) {
 
   return (
     <div className="questions-container">
-      <h3>{props.title}</h3>
+      <h2>{props.title}</h2>
       <div className="answers-container">{answersDisplay}</div>
     </div>
   );

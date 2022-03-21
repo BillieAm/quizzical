@@ -5,11 +5,13 @@ import Question from "./Question";
 export default function App() {
   const [game, setGame] = useState({
     hasStarted: false,
+    hasAllAnswered: false,
     hasChecked: false,
     round: 1,
   });
   const [questions, setQuestions] = useState([]);
-  console.log(questions);
+  console.log("questions", questions);
+  console.log("game", game);
   useEffect(() => {
     (async function getQuestions() {
       const res = await fetch("https://opentdb.com/api.php?amount=5");
@@ -34,6 +36,13 @@ export default function App() {
     })();
   }, [game.round]);
 
+  useEffect(() => {
+    setGame((prevGame) => ({
+      ...prevGame,
+      hasAllAnswered: questions.every((question) => question.playerAnswer),
+    }));
+  }, [questions]);
+
   // Happens only once at the beginning
   const startGame = () => {
     setGame((prevGame) => ({ ...prevGame, hasStarted: !prevGame.hasStarted }));
@@ -43,7 +52,7 @@ export default function App() {
     setGame((prevGame) => ({ ...prevGame, round: prevGame.round + 1 }));
   };
 
-  function addPlyerAnswer(questionId, answer) {
+  function addPlayerAnswer(questionId, answer) {
     setQuestions((prevQuestions) => {
       return questions.map((question) => {
         return question.id === questionId
@@ -51,6 +60,13 @@ export default function App() {
           : question;
       });
     });
+  }
+
+  function checkAnswers() {
+    setGame((prevGame) => ({
+      ...prevGame,
+      hasChecked: prevGame.hasAllAnswered,
+    }));
   }
 
   const questionsDisplay = questions.map((question) => {
@@ -62,7 +78,7 @@ export default function App() {
         answers={question.shuffledAnswers}
         playerAnswer={question.playerAnswer}
         handlePlayerAnswer={(e) =>
-          addPlyerAnswer(question.id, e.target.innerText)
+          addPlayerAnswer(question.id, e.target.innerText)
         }
       />
     );
@@ -73,14 +89,20 @@ export default function App() {
       {game.hasStarted ? (
         <div className="quizzical">
           {questionsDisplay}
-          <button className="gameBtn">
-            {game.hasChecked ? "Play Again" : "Check Answers"}
-          </button>
+          <h3 className="err-msg hidden">Please answer all the questions</h3>
+          <section className="results">
+            <h3 className="score hidden">
+              You scored {}/{questions.length} correct answers
+            </h3>
+            <button className="gameBtn" onClick={checkAnswers}>
+              {game.hasChecked ? "Play Again" : "Check Answers"}
+            </button>
+          </section>
         </div>
       ) : (
         <div className="not-started">
           <h1>Quizzical</h1>
-          <p>Test yourself with trivia questions</p>
+          <p>Test your general knowledge with some trivia questions</p>
           <button className="startBtn" onClick={startGame}>
             Start Game
           </button>
