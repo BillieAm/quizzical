@@ -3,7 +3,6 @@ export default function Question(props) {
     return (
       <p
         key={index + 1}
-        index={index}
         onClick={props.handlePlayerAnswer}
         style={{
           backgroundColor: props.playerAnswer === answer ? "grey" : "white",

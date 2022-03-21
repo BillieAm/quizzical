@@ -3,22 +3,23 @@ import { decode } from "html-entities";
 import Question from "./Question";
 
 export default function App() {
-  const [gameStart, setGameStart] = useState(false);
-  const [gameRound, setGameRound] = useState(0);
+  const [game, setGame] = useState({
+    hasStarted: false,
+    hasChecked: false,
+    round: 1,
+  });
   const [questions, setQuestions] = useState([]);
-
+  console.log(questions);
   useEffect(() => {
     (async function getQuestions() {
       const res = await fetch("https://opentdb.com/api.php?amount=5");
       const data = await res.json();
-      console.log(data.results);
 
       const questionsData = data.results.map((item, index) => {
         const correctAnswer = decode(item.correct_answer);
         const incorrectAnswers = item.incorrect_answers.map((answer) =>
           decode(answer)
         );
-
         return {
           id: index + 1,
           question: decode(item.question),
@@ -31,14 +32,15 @@ export default function App() {
       });
       setQuestions(questionsData);
     })();
-  }, [gameRound]);
+  }, [game.round]);
 
+  // Happens only once at the beginning
   const startGame = () => {
-    setGameStart(true);
+    setGame((prevGame) => ({ ...prevGame, hasStarted: !prevGame.hasStarted }));
   };
 
   const roundsCounter = () => {
-    setGameRound((prevCount) => prevCount + 1);
+    setGame((prevGame) => ({ ...prevGame, round: prevGame.round + 1 }));
   };
 
   function addPlyerAnswer(questionId, answer) {
@@ -68,16 +70,20 @@ export default function App() {
 
   return (
     <div className="App">
-      {gameStart ? (
+      {game.hasStarted ? (
         <div className="quizzical">
           {questionsDisplay}
-          <button>Check Answers</button>
+          <button className="gameBtn">
+            {game.hasChecked ? "Play Again" : "Check Answers"}
+          </button>
         </div>
       ) : (
         <div className="not-started">
           <h1>Quizzical</h1>
           <p>Test yourself with trivia questions</p>
-          <button onClick={startGame}>Start Game</button>
+          <button className="startBtn" onClick={startGame}>
+            Start Game
+          </button>
         </div>
       )}
     </div>
