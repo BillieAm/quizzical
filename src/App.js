@@ -7,6 +7,7 @@ export default function App() {
     hasStarted: false,
     hasAllAnswered: false,
     hasChecked: false,
+    correctCount: 0,
     round: 1,
   });
   const [questions, setQuestions] = useState([]);
@@ -48,10 +49,6 @@ export default function App() {
     setGame((prevGame) => ({ ...prevGame, hasStarted: !prevGame.hasStarted }));
   };
 
-  const roundsCounter = () => {
-    setGame((prevGame) => ({ ...prevGame, round: prevGame.round + 1 }));
-  };
-
   function addPlayerAnswer(questionId, answer) {
     !game.hasChecked &&
       setQuestions((prevQuestions) => {
@@ -64,11 +61,30 @@ export default function App() {
   }
 
   function checkAnswers() {
+    if (!game.hasAllAnswered) {
+      alert("Please answer all the questions");
+    }
+    const correctCount = questions.filter((question) => {
+      return question.correct_answer === question.playerAnswer;
+    });
+
+    console.log(correctCount.length);
     setGame((prevGame) => ({
       ...prevGame,
       hasChecked: prevGame.hasAllAnswered,
+      correctCount: correctCount.length,
     }));
   }
+
+  const playAgain = () => {
+    setGame((prevGame) => ({
+      hasStarted: true,
+      hasAllAnswered: false,
+      hasChecked: false,
+      correctCount: 0,
+      round: prevGame.round + 1,
+    }));
+  };
 
   const questionsDisplay = questions.map((question) => {
     return (
@@ -92,12 +108,14 @@ export default function App() {
       {game.hasStarted ? (
         <div className="quizzical">
           {questionsDisplay}
-          <h3 className="err-msg hidden">Please answer all the questions</h3>
           <section className="results">
-            <h3 className="score hidden">
-              You scored {}/{questions.length} correct answers
+            <h3 className={`score ${!game.hasChecked && "hidden"}`}>
+              You scored {game.correctCount}/{questions.length} correct answers
             </h3>
-            <button className="gameBtn" onClick={checkAnswers}>
+            <button
+              className="gameBtn"
+              onClick={game.hasChecked ? playAgain : checkAnswers}
+            >
               {game.hasChecked ? "Play Again" : "Check Answers"}
             </button>
           </section>
