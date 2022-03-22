@@ -53,13 +53,14 @@ export default function App() {
   };
 
   function addPlayerAnswer(questionId, answer) {
-    setQuestions((prevQuestions) => {
-      return questions.map((question) => {
-        return question.id === questionId
-          ? { ...question, playerAnswer: answer }
-          : question;
+    !game.hasChecked &&
+      setQuestions((prevQuestions) => {
+        return questions.map((question) => {
+          return question.id === questionId
+            ? { ...question, playerAnswer: answer }
+            : question;
+        });
       });
-    });
   }
 
   function checkAnswers() {
@@ -80,6 +81,7 @@ export default function App() {
         handlePlayerAnswer={(e) =>
           addPlayerAnswer(question.id, e.target.innerText)
         }
+        hasChecked={game.hasChecked}
       />
     );
   });
