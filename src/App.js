@@ -18,9 +18,9 @@ export default function App() {
       const data = await res.json();
 
       const questionsData = data.results.map((item, index) => {
-        const correctAnswer = decode(item.correct_answer);
+        const correctAnswer = decode(item.correct_answer).trim();
         const incorrectAnswers = item.incorrect_answers.map((answer) =>
-          decode(answer)
+          decode(answer).trim()
         );
         return {
           id: index + 1,
@@ -78,6 +78,7 @@ export default function App() {
         title={question.question}
         answers={question.shuffledAnswers}
         playerAnswer={question.playerAnswer}
+        correct={question.correct_answer}
         handlePlayerAnswer={(e) =>
           addPlayerAnswer(question.id, e.target.innerText)
         }
