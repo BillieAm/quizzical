@@ -1,9 +1,95 @@
+:root {
+  --bg-color: #f5f7fb;
+  --main-text-color: #293264;
+  --main-btn-color: #4d5b9e;
+  --border-bottom-line: #dbdef0;
+  --player-answer-color: #d6dbf5;
+  --correct-color: #94d7a2;
+  --incorrect-color: #f8bcbc;
+}
+
 * {
   box-sizing: border-box;
 }
 
 body {
   margin: 0;
+  background-color: var(--bg-color);
+  color: var(--main-text-color);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Inter", sans-serif;
+}
+
+body::before,
+body::after {
+  position: fixed;
+  z-index: -1;
+}
+
+body::before {
+  content: url(./icons/blob1.svg);
+  top: 0;
+  right: 0;
+}
+
+body::after {
+  content: url(./icons/blob2.svg);
+  bottom: 0;
+  left: 0;
+}
+
+h1 {
+  font-family: "Karla", sans-serif;
+  margin-top: 0;
+}
+
+.app {
+  border: 2px solid blue;
+  padding: 2em;
+}
+
+.not-started {
+  padding: 2em;
+  text-align: center;
+}
+
+.quizzical {
+  border: 2px solid green;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.question-container {
+  border: 2px solid red;
+}
+
+.answers-container {
+  border: 2px solid teal;
+}
+
+.question {
+  border: 2px solid pink;
+  font-size: 1rem;
+}
+
+.results {
+  border: 2px solid orange;
+}
+
+button {
+  background-color: var(--main-btn-color);
+  color: var(--bg-color);
+  border: none;
+  border-radius: 15px;
+  margin: 1.2em 0;
+}
+
+.start-btn {
+  font-size: 1.2rem;
+  padding: 1em 3em;
 }
 
 .hidden {

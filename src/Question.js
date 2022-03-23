@@ -21,15 +21,20 @@ export default function Question(props) {
     }
 
     return (
-      <p key={index + 1} onClick={props.handlePlayerAnswer} style={styles}>
+      <span
+        className="answer"
+        key={index + 1}
+        onClick={props.handlePlayerAnswer}
+        style={styles}
+      >
         {answer}
-      </p>
+      </span>
     );
   });
 
   return (
-    <div className="questions-container">
-      <h2>{props.title}</h2>
+    <div className="question-container">
+      <h3 className="question">{props.title}</h3>
       <div className="answers-container">{answersDisplay}</div>
     </div>
   );

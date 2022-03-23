@@ -7,12 +7,12 @@ export default function App() {
     hasStarted: false,
     hasAllAnswered: false,
     hasChecked: false,
+    errMessage: false,
     correctCount: 0,
     round: 1,
   });
   const [questions, setQuestions] = useState([]);
-  console.log("questions", questions);
-  console.log("game", game);
+
   useEffect(() => {
     (async function getQuestions() {
       const res = await fetch("https://opentdb.com/api.php?amount=5");
@@ -62,18 +62,19 @@ export default function App() {
 
   function checkAnswers() {
     if (!game.hasAllAnswered) {
-      alert("Please answer all the questions");
-    }
-    const correctCount = questions.filter((question) => {
-      return question.correct_answer === question.playerAnswer;
-    });
+      setGame((prevGame) => ({ ...prevGame, errMessage: true }));
+    } else {
+      const correctCount = questions.filter((question) => {
+        return question.correct_answer === question.playerAnswer;
+      });
 
-    console.log(correctCount.length);
-    setGame((prevGame) => ({
-      ...prevGame,
-      hasChecked: prevGame.hasAllAnswered,
-      correctCount: correctCount.length,
-    }));
+      setGame((prevGame) => ({
+        ...prevGame,
+        hasChecked: prevGame.hasAllAnswered,
+        correctCount: correctCount.length,
+        errMessage: false,
+      }));
+    }
   }
 
   const playAgain = () => {
@@ -81,6 +82,7 @@ export default function App() {
       hasStarted: true,
       hasAllAnswered: false,
       hasChecked: false,
+      errMessage: false,
       correctCount: 0,
       round: prevGame.round + 1,
     }));
@@ -104,16 +106,19 @@ export default function App() {
   });
 
   return (
-    <div className="App">
+    <div className="app">
       {game.hasStarted ? (
         <div className="quizzical">
           {questionsDisplay}
+          <h3 className={`errMsg ${!game.errMessage && "hidden"}`}>
+            Please answer all the questions
+          </h3>
           <section className="results">
             <h3 className={`score ${!game.hasChecked && "hidden"}`}>
               You scored {game.correctCount}/{questions.length} correct answers
             </h3>
             <button
-              className="gameBtn"
+              className="game-btn"
               onClick={game.hasChecked ? playAgain : checkAnswers}
             >
               {game.hasChecked ? "Play Again" : "Check Answers"}
@@ -123,9 +128,9 @@ export default function App() {
       ) : (
         <div className="not-started">
           <h1>Quizzical</h1>
-          <p>Test your general knowledge with some trivia questions</p>
-          <button className="startBtn" onClick={startGame}>
-            Start Game
+          <p>Test your general knowledge</p>
+          <button className="start-btn" onClick={startGame}>
+            Start Quiz
           </button>
         </div>
       )}
