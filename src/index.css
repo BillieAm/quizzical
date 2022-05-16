@@ -66,11 +66,11 @@ h1 {
   max-width: 650px;
   margin: 0 auto;
 }
-
+/* 
 .question-container {
-  /* border: 2px solid red; */
+  border: 2px solid red;
 }
-
+ */
 .answers-container {
   /* border: 2px solid teal; */
   display: flex;
@@ -89,11 +89,11 @@ h1 {
   /* border: 2px solid pink; */
   font-size: 1rem;
 }
-
+/* 
 .results {
-  /* border: 2px solid orange; */
+  border: 2px solid orange;
 }
-
+ */
 button {
   background-color: var(--main-btn-color);
   color: var(--bg-color);
