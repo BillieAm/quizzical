@@ -41,13 +41,17 @@ body::after {
   left: 0;
 }
 
-h1 {
+h1,
+h3 {
   font-family: "Karla", sans-serif;
+}
+
+h1 {
   margin-top: 0;
 }
 
 .app {
-  border: 2px solid blue;
+  /* border: 2px solid blue; */
   padding: 2em;
 }
 
@@ -57,26 +61,37 @@ h1 {
 }
 
 .quizzical {
-  border: 2px solid green;
+  /* border: 2px solid green; */
   width: 90%;
+  max-width: 650px;
   margin: 0 auto;
 }
 
 .question-container {
-  border: 2px solid red;
+  /* border: 2px solid red; */
 }
 
 .answers-container {
-  border: 2px solid teal;
+  /* border: 2px solid teal; */
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.answer {
+  border: 0.1em solid var(--main-btn-color);
+  border-radius: 10px;
+  font-size: 0.7rem;
+  margin-bottom: 1em;
+  padding: 0.3em 1em;
 }
 
 .question {
-  border: 2px solid pink;
+  /* border: 2px solid pink; */
   font-size: 1rem;
 }
 
 .results {
-  border: 2px solid orange;
+  /* border: 2px solid orange; */
 }
 
 button {
