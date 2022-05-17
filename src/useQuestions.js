@@ -3,7 +3,7 @@ import { decode } from "html-entities";
 
 function useQuestions() {
   const [questions, setQuestions] = useState([]);
-  console.log(questions);
+  const [newRound, setNewRound] = useState(1);
 
   useEffect(() => {
     (async function getQuestions() {
@@ -27,7 +27,7 @@ function useQuestions() {
       });
       setQuestions(questionsData);
     })();
-  }, []);
+  }, [newRound]);
 
   function handleAnswer(q, a) {
     setQuestions((prevQuestions) => {
@@ -36,7 +36,12 @@ function useQuestions() {
       });
     });
   }
-  return { questions, handleAnswer };
+
+  function roundCounter() {
+    setNewRound((prevcount) => prevcount + 1);
+  }
+
+  return { questions, handleAnswer, roundCounter };
 }
 
 export default useQuestions;

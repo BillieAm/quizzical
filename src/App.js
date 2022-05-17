@@ -3,14 +3,13 @@ import Question from "./Question";
 import { useState, useEffect } from "react";
 
 export default function App() {
-  const { questions, handleAnswer } = useQuestions();
+  const { questions, handleAnswer, roundCounter } = useQuestions();
   const [game, setGame] = useState({
     hasStarted: false,
     hasAllAnswered: false,
     hasChecked: false,
     errMessage: false,
     correctCount: 0,
-    round: 1,
   });
 
   useEffect(() => {
@@ -20,9 +19,8 @@ export default function App() {
     }));
   }, [questions]);
 
-  // Happens only once at the beginning
   const startGame = () => {
-    setGame((prevGame) => ({ ...prevGame, hasStarted: !prevGame.hasStarted }));
+    setGame((prevGame) => ({ ...prevGame, hasStarted: true }));
   };
 
   function addPlayerAnswer(questionId, answer) {
@@ -48,13 +46,13 @@ export default function App() {
 
   const playAgain = () => {
     setGame((prevGame) => ({
-      hasStarted: true,
+      hasStarted: false,
       hasAllAnswered: false,
       hasChecked: false,
       errMessage: false,
       correctCount: 0,
-      round: prevGame.round + 1,
     }));
+    roundCounter();
   };
 
   const questionsDisplay = questions.map((question) => {
