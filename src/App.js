@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
-import { decode } from "html-entities";
+import useQuestions from "./useQuestions";
 import Question from "./Question";
+import { useState, useEffect } from "react";
 
 export default function App() {
+  const { questions, handleAnswer } = useQuestions();
   const [game, setGame] = useState({
     hasStarted: false,
     hasAllAnswered: false,
@@ -11,31 +12,6 @@ export default function App() {
     correctCount: 0,
     round: 1,
   });
-  const [questions, setQuestions] = useState([]);
-
-  useEffect(() => {
-    (async function getQuestions() {
-      const res = await fetch("https://opentdb.com/api.php?amount=5");
-      const data = await res.json();
-
-      const questionsData = data.results.map((item, index) => {
-        const correctAnswer = decode(item.correct_answer).trim();
-        const incorrectAnswers = item.incorrect_answers.map((answer) =>
-          decode(answer).trim()
-        );
-        return {
-          id: index + 1,
-          question: decode(item.question),
-          correct_answer: correctAnswer,
-          incorrect_answers: incorrectAnswers,
-          shuffledAnswers: [...incorrectAnswers, correctAnswer].sort(
-            () => Math.random() - 0.5
-          ),
-        };
-      });
-      setQuestions(questionsData);
-    })();
-  }, [game.round]);
 
   useEffect(() => {
     setGame((prevGame) => ({
@@ -50,14 +26,7 @@ export default function App() {
   };
 
   function addPlayerAnswer(questionId, answer) {
-    !game.hasChecked &&
-      setQuestions((prevQuestions) => {
-        return questions.map((question) => {
-          return question.id === questionId
-            ? { ...question, playerAnswer: answer }
-            : question;
-        });
-      });
+    !game.hasChecked && handleAnswer(questionId, answer);
   }
 
   function checkAnswers() {
