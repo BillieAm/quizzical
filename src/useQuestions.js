@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { decode } from "html-entities";
+import { nanoid } from "nanoid";
 
 function useQuestions() {
   const [questions, setQuestions] = useState([]);
@@ -10,13 +11,13 @@ function useQuestions() {
       const res = await fetch("https://opentdb.com/api.php?amount=5");
       const data = await res.json();
 
-      const questionsData = data.results.map((item, index) => {
+      const questionsData = data.results.map((item) => {
         const correctAnswer = decode(item.correct_answer).trim();
         const incorrectAnswers = item.incorrect_answers.map((answer) =>
           decode(answer).trim()
         );
         return {
-          id: index + 1,
+          id: nanoid(),
           question: decode(item.question),
           correct_answer: correctAnswer,
           incorrect_answers: incorrectAnswers,
