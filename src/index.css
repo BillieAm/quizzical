@@ -30,13 +30,13 @@ body::after {
 }
 
 body::before {
-  content: url(./icons/blob1.svg);
+  content: url(./assets/blob1.svg);
   top: 0;
   right: 0;
 }
 
 body::after {
-  content: url(./icons/blob2.svg);
+  content: url(./assets/blob2.svg);
   bottom: 0;
   left: 0;
 }

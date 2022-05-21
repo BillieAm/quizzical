@@ -38,11 +38,11 @@ function useQuestions() {
     });
   }
 
-  function roundCounter() {
+  function roundsCounter() {
     setNewRound((prevcount) => prevcount + 1);
   }
 
-  return { questions, handleAnswer, roundCounter };
+  return { questions, handleAnswer, roundsCounter };
 }
 
 export default useQuestions;

@@ -1,9 +1,9 @@
-import useQuestions from "./useQuestions";
+import useQuestions from "./hooks/useQuestions";
 import Question from "./Question";
 import { useState, useEffect } from "react";
 
 export default function App() {
-  const { questions, handleAnswer, roundCounter } = useQuestions();
+  const { questions, handleAnswer, roundsCounter } = useQuestions();
   const [game, setGame] = useState({
     hasStarted: false,
     hasAllAnswered: false,
@@ -52,7 +52,7 @@ export default function App() {
       errMessage: false,
       correctCount: 0,
     }));
-    roundCounter();
+    roundsCounter();
   };
 
   const questionsDisplay = questions.map((question) => {
