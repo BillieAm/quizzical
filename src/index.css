@@ -33,12 +33,14 @@ body::before {
   content: url(./assets/blob1.svg);
   top: 0;
   right: 0;
+  transform: translate(40%, -40%);
 }
 
 body::after {
   content: url(./assets/blob2.svg);
   bottom: 0;
   left: 0;
+  transform: translate(-40%, 40%);
 }
 
 h1,
@@ -109,8 +111,15 @@ span.answer[disabled] {
 
 .results {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+@media (min-width: 450px) {
+  .results {
+    flex-direction: row;
+  }
 }
 
 button {
