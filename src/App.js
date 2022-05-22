@@ -77,7 +77,7 @@ export default function App() {
       {game.hasStarted ? (
         <div className="quizzical">
           {questionsDisplay}
-          <h3 className={`errMsg ${!game.errMessage && "hidden"}`}>
+          <h3 className={game.errMessage ? "errMsg" : "hidden"}>
             Please answer all the questions
           </h3>
           <section className="results">

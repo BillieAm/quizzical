@@ -51,7 +51,6 @@ h1 {
 }
 
 .app {
-  /* border: 2px solid blue; */
   padding: 2em;
 }
 
@@ -61,50 +60,81 @@ h1 {
 }
 
 .quizzical {
-  /* border: 2px solid green; */
   width: 90%;
   max-width: 650px;
   margin: 0 auto;
 }
-/* 
+
 .question-container {
-  border: 2px solid red;
+  border-bottom: 1px solid var(--border-bottom-line);
+  padding-bottom: 1em;
 }
- */
+
+.question {
+  font-size: 1rem;
+}
+
 .answers-container {
-  /* border: 2px solid teal; */
   display: flex;
   flex-wrap: wrap;
+  gap: 0.5em;
 }
 
 .answer {
   border: 0.1em solid var(--main-btn-color);
   border-radius: 10px;
   font-size: 0.7rem;
-  margin-bottom: 1em;
   padding: 0.3em 1em;
+  cursor: pointer;
 }
 
-.question {
-  /* border: 2px solid pink; */
-  font-size: 1rem;
+.player-answer {
+  background-color: var(--player-answer-color);
+  border: none;
 }
-/* 
+
+.incorrect {
+  background-color: var(--incorrect-color);
+  border: none;
+}
+
+.correct {
+  background-color: var(--correct-color);
+  border: none;
+}
+
+span.answer[disabled] {
+  opacity: 0.6;
+}
+
 .results {
-  border: 2px solid orange;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
- */
+
 button {
   background-color: var(--main-btn-color);
   color: var(--bg-color);
   border: none;
   border-radius: 15px;
   margin: 1.2em 0;
+  cursor: pointer;
 }
 
 .start-btn {
   font-size: 1.2rem;
   padding: 1em 3em;
+}
+
+.game-btn {
+  margin: 1.5em;
+  padding: 1em 2em;
+  border-radius: 10px;
+}
+
+.errMsg {
+  color: red;
 }
 
 .hidden {
