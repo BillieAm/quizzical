@@ -1,9 +1,10 @@
-import useQuestions from "./hooks/useQuestions";
+import useFetchData from "./hooks/useFetchData";
 import Question from "./Question";
 import { useState, useEffect } from "react";
 
 export default function App() {
-  const { questions, handleAnswer, roundsCounter } = useQuestions();
+  const { data, loading, error, questions, handleAnswer, roundsCounter } =
+    useFetchData();
   const [game, setGame] = useState({
     hasStarted: false,
     hasAllAnswered: false,
