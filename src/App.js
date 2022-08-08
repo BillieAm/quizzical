@@ -1,9 +1,11 @@
+import { useState, useEffect } from "react";
 import useFetchData from "./hooks/useFetchData";
 import Question from "./Question";
-import { useState, useEffect } from "react";
+import Start from "./components/Start";
+import Quiz from "./components/Quiz";
 
 export default function App() {
-  const { data, loading, error, questions, handleAnswer, roundsCounter } =
+  const { loading, error, questions, handleAnswer, roundsCounter } =
     useFetchData();
   const [game, setGame] = useState({
     hasStarted: false,
@@ -76,31 +78,15 @@ export default function App() {
   return (
     <div className="app">
       {game.hasStarted ? (
-        <div className="quizzical">
-          {questionsDisplay}
-          <h3 className={game.errMessage ? "errMsg" : "hidden"}>
-            Please answer all the questions
-          </h3>
-          <section className="results">
-            <h3 className={`score ${!game.hasChecked && "hidden"}`}>
-              You scored {game.correctCount}/{questions.length} correct answers
-            </h3>
-            <button
-              className="game-btn"
-              onClick={game.hasChecked ? playAgain : checkAnswers}
-            >
-              {game.hasChecked ? "Play Again" : "Check Answers"}
-            </button>
-          </section>
-        </div>
+        <Quiz
+          questionsDisplay={questionsDisplay}
+          game={game}
+          questions={questions}
+          playAgain={playAgain}
+          checkAnswers={checkAnswers}
+        />
       ) : (
-        <div className="not-started">
-          <h1>Quizzical</h1>
-          <p>Test your general knowledge</p>
-          <button className="start-btn" onClick={startGame}>
-            Start Quiz
-          </button>
-        </div>
+        <Start startGame={startGame} />
       )}
     </div>
   );

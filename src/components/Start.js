@@ -1,4 +1,4 @@
-export default function Start() {
+function Start({ startGame }) {
   return (
     <div className="not-started">
       <h1>Quizzical</h1>
@@ -9,3 +9,5 @@ export default function Start() {
     </div>
   );
 }
+
+export default Start;

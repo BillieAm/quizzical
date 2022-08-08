@@ -57,7 +57,7 @@ function useFetchData() {
   }
 
   function roundsCounter() {
-    setNewRound((prevcount) => prevcount + 1);
+    setNewRound((prevCount) => prevCount + 1);
   }
 
   return { loading, error, questions, handleAnswer, roundsCounter };
