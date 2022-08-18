@@ -4,8 +4,11 @@ This solo project was created from scratch by me as part of [Scrimba's Frontend 
 In this project I was able to put the knowledge I gained from Scrimba and other resources to work as well as learn new topics along the way.
 
 ### Tools and technologies I used in this project:
+- HTML
+- CSS
+- Javascript
+- React (with hooks)
 
-In the project directory, you can run:
 
 ### `npm start`
 
