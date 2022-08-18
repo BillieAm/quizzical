@@ -3,7 +3,7 @@
 This solo project was created from scratch by me as part of [Scrimba's Frontend Developer Career Path](https://scrimba.com/learn/frontend).\
 In this project I was able to put the knowledge I gained from Scrimba and other resources to work as well as learn new topics along the way.
 
-## Available Scripts
+### Tools and technologies I used in this project:
 
 In the project directory, you can run:
 
