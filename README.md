@@ -1,6 +1,6 @@
 # Quizzical
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This solo project was created from scratch by me as part of [Scrimba's Frontend Developer Career Path](https://scrimba.com/learn/frontend).
 
 ## Available Scripts
 
