@@ -1,6 +1,7 @@
 # Quizzical
 
 This solo project was created from scratch by me as part of [Scrimba's Frontend Developer Career Path](https://scrimba.com/learn/frontend).\
+All I have been provided with is a Figma design.\
 In this project I was able to put the knowledge I gained from Scrimba and other resources to work as well as learn new topics along the way.
 <br>
 <br>
